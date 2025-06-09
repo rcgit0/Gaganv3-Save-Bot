@@ -7,6 +7,8 @@ from pyrogram import filters
 user_steps = {}
 
 def login_filter_func(_, __, message):
+    if not message.from_user:
+        return False  # Ignore system or anonymous messages
     user_id = message.from_user.id
     return user_id in user_steps
 
@@ -17,7 +19,6 @@ def set_user_step(user_id, step=None):
         user_steps[user_id] = step
     else:
         user_steps.pop(user_id, None)
-
 
 def get_user_step(user_id):
     return user_steps.get(user_id)
