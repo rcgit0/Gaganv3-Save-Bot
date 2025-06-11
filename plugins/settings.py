@@ -29,7 +29,7 @@ async def settings_command(event):
 async def send_settings_message(chat_id, user_id):
     buttons = [
         [
-            Button.inline('📝 Set Channel ID', b'setchat'),
+            Button.inline('📝 Set Chat ID', b'setchat'),
             Button.inline('🏷️ Set Rename Tag', b'setrename')
         ],
         [
