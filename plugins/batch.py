@@ -288,22 +288,12 @@ async def process_msg(c, u, m, d, lt, uid, i):
                     mtd = await get_video_metadata(f)
                     dur, h, w = mtd['duration'], mtd['width'], mtd['height']
                     th = await screenshot(f, dur, d)
-kwargs = {
-    "video": f,
-    "caption": ft if m.caption else None,
-    "width": w,
-    "height": h,
-    "duration": dur,
-    "progress": prog,
-    "progress_args": (c, d, p.id, st),
-    "reply_to_message_id": rtmid
-}
-
-# Only include thumb if it exists
-if th and os.path.exists(th):
-    kwargs["thumb"] = th
-
-await c.send_video(tcid, **kwargs)
+                    kwargs = {"video": f, "caption": ft if m.caption else None,
+                              "width": w, "height": h, "duration": dur,
+                              "progress": prog, "progress_args": (c, d, p.id, st), "reply_to_message_id": rtmid}
+              if th and os.path.exists(th):
+                  kwargs["thumb"] = th
+                  await c.send_video(tcid, **kwargs)
                 elif m.video_note:
                     await c.send_video_note(tcid, video_note=f, progress=prog, 
                                         progress_args=(c, d, p.id, st), reply_to_message_id=rtmid)
