@@ -296,7 +296,8 @@ async def process_msg(c, u, m, d, lt, uid, i):
                          'width': w, 'height': h, 'duration': dur,
                          'progress': prog, 'progress_args': (c, d, p.id, st),
                          'reply_to_message_id': rtmid}
-    if th and os.path.exists(th): send_video_kwargs['thumb'] = th
+    if th and os.path.exists(th):
+        send_video_kwargs['thumb'] = th
         await c.send_video(tcid, **send_video_kwargs)
                 elif m.video_note:
                     await c.send_video_note(tcid, video_note=f, progress=prog, 
