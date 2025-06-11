@@ -284,7 +284,7 @@ async def process_msg(c, u, m, d, lt, uid, i):
             st = time.time()
 
             try:
-                if m.video or os.path.splitext(f)[1].lower() == '.mp4'
+                if m.video or os.path.splitext(f)[1].lower() == '.mp4':
                 while not os.path.exists(f) or os.path.getsize(f) < 10000:
                     await asyncio.sleep(0.2)
                     mtd = await get_video_metadata(f)
