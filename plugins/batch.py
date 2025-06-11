@@ -288,10 +288,16 @@ async def process_msg(c, u, m, d, lt, uid, i):
                     mtd = await get_video_metadata(f)
                     dur, h, w = mtd['duration'], mtd['width'], mtd['height']
                     th = await screenshot(f, dur, d)
-                    await c.send_video(tcid, video=f, caption=ft if m.caption else None, 
-                                    thumb=None, width=w, height=h, duration=dur, 
-                                    progress=prog, progress_args=(c, d, p.id, st), 
-                                    reply_to_message_id=rtmid)
+                    if m.video or os.path.splitext(f)[1].lower() == '.mp4':
+    mtd = await get_video_metadata(f)
+    dur, h, w = mtd['duration'], mtd['width'], mtd['height']
+    th = await screenshot(f, dur, d)
+    send_video_kwargs = {'video': f, 'caption': ft if m.caption else None,
+                         'width': w, 'height': h, 'duration': dur,
+                         'progress': prog, 'progress_args': (c, d, p.id, st),
+                         'reply_to_message_id': rtmid}
+    if th and os.path.exists(th): send_video_kwargs['thumb'] = th
+        await c.send_video(tcid, **send_video_kwargs)
                 elif m.video_note:
                     await c.send_video_note(tcid, video_note=f, progress=prog, 
                                         progress_args=(c, d, p.id, st), reply_to_message_id=rtmid)
