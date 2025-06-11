@@ -289,8 +289,7 @@ async def process_msg(c, u, m, d, lt, uid, i):
                     dur, h, w = mtd['duration'], mtd['width'], mtd['height']
                     th = await screenshot(f, dur, d)
                     await c.send_video(tcid, video=f, caption=ft if m.caption else None, 
-                                    thumb=th if th and os.path.exists(th) else None,
-                                    width=w, height=h, duration=dur, 
+                                    thumb=None, width=w, height=h, duration=dur, 
                                     progress=prog, progress_args=(c, d, p.id, st), 
                                     reply_to_message_id=rtmid)
                 elif m.video_note:
