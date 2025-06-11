@@ -284,11 +284,12 @@ async def process_msg(c, u, m, d, lt, uid, i):
             st = time.time()
 
             try:
-                if m.video or os.path.splitext(f)[1].lower() == '.mp4':
+                if m.video or os.path.splitext(f)[1].lower() == '.mp4'
+                while not os.path.exists(f) or os.path.getsize(f) < 10000:
+                    await asyncio.sleep(0.2)
                     mtd = await get_video_metadata(f)
                     dur, h, w = mtd['duration'], mtd['width'], mtd['height']
                     th = await screenshot(f, dur, d)
-                    await asyncio.sleep(2)
                     await c.send_video(tcid, video=f, caption=ft if m.caption else None, 
                                     thumb=th, width=w, height=h, duration=dur, 
                                     progress=prog, progress_args=(c, d, p.id, st), 
